@@ -1,0 +1,14 @@
+torch
+torchvision
+flwr
+opacus
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+pyyaml
+tqdm
+jupyter
+tensorboard
+mlflow
