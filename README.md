@@ -45,38 +45,38 @@ uv pip install -r requirements.txt
 
 ## ppfl_ADP/
 ## ├── datasets/
-## │   └── mnist.py             # Data loading and preprocessing
-### ├── logs/
-### │   └── results/             # Experiment output and logs
-### ├── strategies/
-### │   └── fedavg_strategy.py   # Federated Averaging implementation
-### ├── utils/
-### │   ├── metrics.py           # Evaluation functions
-### │   └── logger.py            # Logging utilities
-### ├── client.py                # Federated Learning client logic
-### ├── server.py                # Federated Learning server/aggregator
-### └── requirements.txt         # Project dependencies
-🛠 Running the Experiment
-To simulate the federated environment, you need to open multiple terminal windows (or use a multiplexer like ). Make sure your virtual environment is active in all terminals.tmux
+#### │   └── mnist.py             # Data loading and preprocessing
+#### ├── logs/
+#### │   └── results/             # Experiment output and logs
+#### ├── strategies/
+#### │   └── fedavg_strategy.py   # Federated Averaging implementation
+#### ├── utils/
+#### │   ├── metrics.py           # Evaluation functions
+#### │   └── logger.py            # Logging utilities
+#### ├── client.py                # Federated Learning client logic
+#### ├── server.py                # Federated Learning server/aggregator
+#### └── requirements.txt         # Project dependencies
+### 🛠 Running the Experiment
+#### To simulate the federated environment, you need to open multiple terminal windows (or use a multiplexer like ). Make sure your virtual environment is active in all terminals.tmux
 
-Terminal 1: Start the Server
+## Terminal 1: Start the Server
 
-Bash
-python server.py
-Terminal 2: Start Client 0
+### Bash
+#### python server.py
+#### Terminal 2: Start Client 0
 
-Bash
-python client.py 0
-Terminal 3: Start Client 1
+### Bash
+#### python client.py 0
+#### Terminal 3: Start Client 1
 
-Bash
-python client.py 1
-📝 Features
-Adaptive DP: Dynamically adjusts noise levels during training.
+### Bash
+#### python client.py 1
+## 📝 Features
+#### Adaptive DP: Dynamically adjusts noise levels during training.
 
-Federated Strategy: Custom  implementation for secure aggregation.FedAvg
+#### Federated Strategy: Custom  implementation for secure aggregation.FedAvg
 
-Logging: Comprehensive tracking of metrics and privacy budget consumption.
+#### Logging: Comprehensive tracking of metrics and privacy budget consumption.
 
-🤝 Contributing
-Feel free to open issues or submit pull requests to improve the adaptive mechanisms or add support for new datasets.
+## 🤝 Contributing
+#### Feel free to open issues or submit pull requests to improve the adaptive mechanisms or add support for new datasets.
