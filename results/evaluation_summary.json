@@ -1,0 +1,8 @@
+{
+    "final_round": 5,
+    "final_accuracy": 0.9865,
+    "best_accuracy": 0.9865,
+    "average_accuracy": 0.9594,
+    "final_loss": 0.0495,
+    "best_loss": 0.0495
+}
