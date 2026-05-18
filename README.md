@@ -42,20 +42,20 @@ uv venv
 source .venv/bin/activate
 uv pip install -r requirements.txt
 📂 Project Structure
-Plaintext
-ppfl_ADP/
-├── datasets/
-│   └── mnist.py             # Data loading and preprocessing
-├── logs/
-│   └── results/             # Experiment output and logs
-├── strategies/
-│   └── fedavg_strategy.py   # Federated Averaging implementation
-├── utils/
-│   ├── metrics.py           # Evaluation functions
-│   └── logger.py            # Logging utilities
-├── client.py                # Federated Learning client logic
-├── server.py                # Federated Learning server/aggregator
-└── requirements.txt         # Project dependencies
+
+## ppfl_ADP/
+## ├── datasets/
+## │   └── mnist.py             # Data loading and preprocessing
+### ├── logs/
+### │   └── results/             # Experiment output and logs
+### ├── strategies/
+### │   └── fedavg_strategy.py   # Federated Averaging implementation
+### ├── utils/
+### │   ├── metrics.py           # Evaluation functions
+### │   └── logger.py            # Logging utilities
+### ├── client.py                # Federated Learning client logic
+### ├── server.py                # Federated Learning server/aggregator
+### └── requirements.txt         # Project dependencies
 🛠 Running the Experiment
 To simulate the federated environment, you need to open multiple terminal windows (or use a multiplexer like ). Make sure your virtual environment is active in all terminals.tmux
 
