@@ -1,0 +1,14 @@
+dataset: HAM10000
+clients: 10
+rounds: 50
+
+privacy:
+  epsilon: 5.0
+  adaptive: true
+  clipping: dynamic
+
+aggregation:
+  strategy: FedAvg
+
+attack:
+  poisoning: false

@@ -1,0 +1,30 @@
+# dataset: mnist
+
+# training:
+#   rounds: 5
+#   local_epochs: 1
+#   batch_size: 32
+#   lr: 0.001
+
+# clients:
+#   num_clients: 2
+
+# privacy:
+#   enabled: false
+
+experiment_name: fedavg_iid
+
+artition:
+  type: dirichlet
+  alpha: 0.5
+
+privacy:
+  enabled: false
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  local_epochs: 1
+
+clients:
+  num_clients: 2
