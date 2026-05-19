@@ -1,22 +1,51 @@
 # experiments/evaluate.py
 
+import sys
 import os
+
+sys.path.append(
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            ".."
+        )
+    )
+)
+
 import json
 import pandas as pd
 
+from utils.config import load_config
+from utils.artifact_manager import ArtifactManager
 
-# -----------------------------------------------------
-# Paths
-# -----------------------------------------------------
+
+# =====================================================
+# LOAD CONFIG
+# =====================================================
+CONFIG_PATH = "configs/fedavg_iid.yaml"
+
+CONFIG = load_config(CONFIG_PATH)
+
+experiment_name = CONFIG["experiment_name"]
+
+
+# =====================================================
+# INITIALIZE ARTIFACT MANAGER
+# =====================================================
+manager = ArtifactManager(
+    experiment_name
+)
+
+
+# =====================================================
+# LOG DIRECTORY
+# =====================================================
 LOG_DIR = "logs"
-RESULTS_DIR = "results"
-
-os.makedirs(RESULTS_DIR, exist_ok=True)
 
 
-# -----------------------------------------------------
-# Find Latest CSV Log
-# -----------------------------------------------------
+# =====================================================
+# FIND LATEST CSV LOG
+# =====================================================
 csv_files = [
 
     f for f in os.listdir(LOG_DIR)
@@ -36,21 +65,32 @@ csv_path = os.path.join(
     latest_csv
 )
 
-print(f"\nLoading: {csv_path}\n")
+print(f"\nLoading Metrics:\n{csv_path}\n")
 
 
-# -----------------------------------------------------
-# Load Metrics
-# -----------------------------------------------------
+# =====================================================
+# LOAD METRICS
+# =====================================================
 df = pd.read_csv(csv_path)
 
 print(df.head())
 
 
-# -----------------------------------------------------
-# Compute Final Statistics
-# -----------------------------------------------------
-final_round = int(df["round"].iloc[-1])
+# =====================================================
+# SAVE metrics.csv
+# =====================================================
+manager.save_csv(
+    df,
+    "metrics.csv"
+)
+
+
+# =====================================================
+# COMPUTE STATISTICS
+# =====================================================
+final_round = int(
+    df["round"].iloc[-1]
+)
 
 final_accuracy = float(
     df["accuracy"].iloc[-1]
@@ -60,7 +100,7 @@ best_accuracy = float(
     df["accuracy"].max()
 )
 
-avg_accuracy = float(
+average_accuracy = float(
     df["accuracy"].mean()
 )
 
@@ -72,61 +112,130 @@ best_loss = float(
     df["loss"].min()
 )
 
+average_loss = float(
+    df["loss"].mean()
+)
 
-# -----------------------------------------------------
-# Summary Dictionary
-# -----------------------------------------------------
+
+# =====================================================
+# SUMMARY DICTIONARY
+# =====================================================
 summary = {
+
+    "experiment_name": experiment_name,
 
     "final_round": final_round,
 
     "final_accuracy": round(
-        final_accuracy, 4
+        final_accuracy,
+        4
     ),
 
     "best_accuracy": round(
-        best_accuracy, 4
+        best_accuracy,
+        4
     ),
 
     "average_accuracy": round(
-        avg_accuracy, 4
+        average_accuracy,
+        4
     ),
 
     "final_loss": round(
-        final_loss, 4
+        final_loss,
+        4
     ),
 
     "best_loss": round(
-        best_loss, 4
-    )
+        best_loss,
+        4
+    ),
+
+    "average_loss": round(
+        average_loss,
+        4
+    ),
+
+    "partition_type": CONFIG[
+        "partition"
+    ]["type"],
+
+    "privacy_enabled": CONFIG[
+        "privacy"
+    ]["enabled"]
 }
 
 
-# -----------------------------------------------------
-# Print Summary
-# -----------------------------------------------------
-print("\n========== Evaluation Summary ==========\n")
+# =====================================================
+# PRINT SUMMARY
+# =====================================================
+print("\n===================================")
+print("EXPERIMENT EVALUATION SUMMARY")
+print("===================================\n")
 
-for k, v in summary.items():
+for key, value in summary.items():
 
-    print(f"{k}: {v}")
+    print(f"{key}: {value}")
 
-print("\n========================================\n")
+print("\n===================================\n")
 
 
-# -----------------------------------------------------
-# Save Summary
-# -----------------------------------------------------
-summary_path = os.path.join(
-    RESULTS_DIR,
-    "evaluation_summary.json"
+# =====================================================
+# SAVE summary.json
+# =====================================================
+manager.save_json(
+    summary,
+    "summary.json"
 )
 
-with open(summary_path, "w") as f:
 
-    json.dump(summary, f, indent=4)
+# =====================================================
+# SAVE config.yaml
+# =====================================================
+manager.save_config(CONFIG)
 
+
+# =====================================================
+# OPTIONAL: CREATE privacy_report.json
+# =====================================================
+if CONFIG["privacy"]["enabled"]:
+
+    privacy_report = {
+
+        "dp_enabled": True,
+
+        "noise_multiplier": CONFIG[
+            "privacy"
+        ].get(
+            "noise_multiplier",
+            None
+        ),
+
+        "max_grad_norm": CONFIG[
+            "privacy"
+        ].get(
+            "max_grad_norm",
+            None
+        ),
+
+        "delta": CONFIG[
+            "privacy"
+        ].get(
+            "delta",
+            None
+        )
+    }
+
+    manager.save_json(
+        privacy_report,
+        "privacy_report.json"
+    )
+
+
+# =====================================================
+# FINISH
+# =====================================================
 print(
-    f"Saved evaluation summary to:\n"
-    f"{summary_path}\n"
+    f"\nEvaluation artifacts saved to:\n"
+    f"results/{experiment_name}/\n"
 )
