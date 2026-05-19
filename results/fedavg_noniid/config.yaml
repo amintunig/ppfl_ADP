@@ -1,0 +1,12 @@
+clients:
+  num_clients: 2
+experiment_name: fedavg_noniid
+partition:
+  alpha: 0.5
+  type: dirichlet
+privacy:
+  enabled: false
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  local_epochs: 1
