@@ -68,7 +68,12 @@ uv pip install -r requirements.txt
 ### Bash
 #### python client.py 0
 #### Terminal 3: Start Client 1
-
+## To run the experiment, execute the following commands in separate terminals:
+    python experiments/run_experiment.py
+    python experiments/evaluate.py
+    python experiments/plot_results.py
+    python experiments/run_all_benchmarks.py
+    python experiments/generate_benchmark_table.py
 ### Bash
 #### python client.py 1
 ## 📝 Features
