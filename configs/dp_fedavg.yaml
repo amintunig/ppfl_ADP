@@ -1,5 +1,75 @@
+# =====================================================
+# PRIVACY SETTINGS
+# =====================================================
 privacy:
+
+  # Enable / Disable Differential Privacy
   enabled: true
+
+
+  # -------------------------------------------------
+  # DP-SGD Parameters
+  # -------------------------------------------------
+
+  # Gaussian noise multiplier
+  # Higher = stronger privacy, lower utility
   noise_multiplier: 1.0
+
+  # Gradient clipping threshold
   max_grad_norm: 1.0
+
+  # Privacy accountant delta
   delta: 1e-5
+
+
+  # -------------------------------------------------
+  # Privacy Budget Targets
+  # -------------------------------------------------
+
+  # Desired privacy budget
+  target_epsilon: 3.0
+
+  # Maximum allowable epsilon
+  max_epsilon: 8.0
+
+
+  # -------------------------------------------------
+  # Adaptive Privacy Flags
+  # -------------------------------------------------
+
+  # Future extension for adaptive DP
+  adaptive: false
+
+  # Options:
+  # static
+  # dynamic_noise
+  # adaptive_clipping
+  # heterogeneity_aware
+  adaptive_strategy: static
+
+
+  # -------------------------------------------------
+  # Dynamic Noise Range
+  # -------------------------------------------------
+
+  min_noise_multiplier: 0.5
+
+  max_noise_multiplier: 2.0
+
+
+  # -------------------------------------------------
+  # Dynamic Clipping Range
+  # -------------------------------------------------
+
+  min_clip_norm: 0.5
+
+  max_clip_norm: 2.0
+
+
+  # -------------------------------------------------
+  # Privacy Logging
+  # -------------------------------------------------
+
+  save_epsilon_history: true
+
+  save_privacy_report: true

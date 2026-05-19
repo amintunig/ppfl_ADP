@@ -1,0 +1,129 @@
+# =====================================================
+# EXPERIMENT
+# =====================================================
+experiment_name: adaptive_dp
+
+
+# =====================================================
+# PARTITION SETTINGS
+# =====================================================
+partition:
+
+  # Options:
+  # iid
+  # label_skew
+  # dirichlet
+
+  type: dirichlet
+
+  # Lower alpha = more heterogeneous
+  alpha: 0.3
+
+
+# =====================================================
+# PRIVACY SETTINGS
+# =====================================================
+privacy:
+
+  enabled: true
+
+  # -----------------------------------------------
+  # Base Differential Privacy
+  # -----------------------------------------------
+  noise_multiplier: 1.0
+
+  max_grad_norm: 1.0
+
+  delta: 1e-5
+
+
+  # -----------------------------------------------
+  # Adaptive DP Settings
+  # -----------------------------------------------
+  adaptive: true
+
+  # Strategy Options:
+  # dynamic_noise
+  # adaptive_clipping
+  # client_adaptive
+  # heterogeneity_aware
+
+  adaptive_strategy: heterogeneity_aware
+
+
+  # -----------------------------------------------
+  # Dynamic Noise Range
+  # -----------------------------------------------
+  min_noise_multiplier: 0.5
+
+  max_noise_multiplier: 2.0
+
+
+  # -----------------------------------------------
+  # Dynamic Clipping
+  # -----------------------------------------------
+  min_clip_norm: 0.5
+
+  max_clip_norm: 2.0
+
+
+  # -----------------------------------------------
+  # Privacy Budget
+  # -----------------------------------------------
+  target_epsilon: 3.0
+
+
+# =====================================================
+# TRAINING SETTINGS
+# =====================================================
+training:
+
+  batch_size: 32
+
+  learning_rate: 0.001
+
+  local_epochs: 1
+
+  rounds: 5
+
+
+# =====================================================
+# CLIENT SETTINGS
+# =====================================================
+clients:
+
+  num_clients: 2
+
+  participation_rate: 1.0
+
+
+# =====================================================
+# AGGREGATION
+# =====================================================
+aggregation:
+
+  strategy: fedavg
+
+
+# =====================================================
+# LOGGING
+# =====================================================
+logging:
+
+  save_metrics: true
+
+  save_plots: true
+
+  save_checkpoints: true
+
+  save_privacy_history: true
+
+
+# =====================================================
+# EVALUATION
+# =====================================================
+evaluation:
+
+  save_summary: true
+
+  compare_baselines: true
