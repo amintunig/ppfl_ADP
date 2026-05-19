@@ -12,11 +12,27 @@
 # privacy:
 #   enabled: false
 
+# experiment_name: fedavg_iid
+
+# artition:
+#   type: dirichlet
+#   alpha: 0.5
+
+# privacy:
+#   enabled: false
+
+# training:
+#   batch_size: 32
+#   learning_rate: 0.001
+#   local_epochs: 1
+
+# clients:
+#   num_clients: 2
+
 experiment_name: fedavg_iid
 
-artition:
-  type: dirichlet
-  alpha: 0.5
+partition:
+  type: iid
 
 privacy:
   enabled: false
@@ -25,7 +41,10 @@ training:
   batch_size: 32
   learning_rate: 0.001
   local_epochs: 1
+  rounds: 5
 
 clients:
   num_clients: 2
 
+aggregation:
+  strategy: fedavg

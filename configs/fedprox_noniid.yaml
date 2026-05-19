@@ -1,0 +1,23 @@
+experiment_name: fedprox_noniid
+
+partition:
+  type: dirichlet
+  alpha: 0.5
+
+privacy:
+  enabled: false
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  local_epochs: 1
+  rounds: 5
+
+clients:
+  num_clients: 2
+
+aggregation:
+  strategy: fedprox
+
+fedprox:
+  mu: 0.01

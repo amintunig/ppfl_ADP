@@ -1,3 +1,14 @@
+# experiment_name: dp_fedavg_iid
+
+# partition:
+#   type: iid
+
+# privacy:
+#   enabled: true
+#   noise_multiplier: 1.0
+#   max_grad_norm: 1.0
+#   delta: 1e-5
+
 experiment_name: dp_fedavg_iid
 
 partition:
@@ -5,6 +16,19 @@ partition:
 
 privacy:
   enabled: true
+
   noise_multiplier: 1.0
   max_grad_norm: 1.0
   delta: 1e-5
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  local_epochs: 1
+  rounds: 5
+
+clients:
+  num_clients: 2
+
+aggregation:
+  strategy: fedavg
