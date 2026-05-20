@@ -1,76 +1,139 @@
+# =====================================================
 # experiments/generate_benchmark_table.py
+# =====================================================
 
 import os
-import json
 import pandas as pd
 
 
-RESULTS_DIR = "results"
+# =====================================================
+# LOG DIRECTORY
+# =====================================================
+LOG_DIR = "logs"
 
 rows = []
 
 
-for experiment in os.listdir(RESULTS_DIR):
+# =====================================================
+# PROCESS ALL METRIC FILES
+# =====================================================
+for file_name in os.listdir(LOG_DIR):
 
-    summary_path = os.path.join(
-
-        RESULTS_DIR,
-        experiment,
-        "summary.json"
-    )
-
-    if not os.path.exists(summary_path):
+    if not file_name.endswith("_metrics.csv"):
 
         continue
 
+    csv_path = os.path.join(
+        LOG_DIR,
+        file_name
+    )
 
-    with open(summary_path, "r") as f:
+    # =============================================
+    # EXPERIMENT NAME
+    # =============================================
+    experiment_name = file_name.replace(
+        "_metrics.csv",
+        ""
+    )
 
-        summary = json.load(f)
+    # =============================================
+    # LOAD CSV
+    # =============================================
+    df = pd.read_csv(csv_path)
 
+    if len(df) == 0:
 
+        continue
+
+    # =============================================
+    # FINAL VALUES
+    # =============================================
+    final_accuracy = df[
+        "accuracy"
+    ].iloc[-1]
+
+    best_accuracy = df[
+        "accuracy"
+    ].max()
+
+    final_loss = df[
+        "loss"
+    ].iloc[-1]
+
+    best_loss = df[
+        "loss"
+    ].min()
+
+    # =============================================
+    # APPEND
+    # =============================================
     rows.append({
 
-        "Method": experiment,
+        "Method":
+            experiment_name,
 
         "Final Accuracy":
-            summary.get(
-                "final_accuracy",
-                None
+            round(
+                final_accuracy,
+                4
             ),
 
         "Best Accuracy":
-            summary.get(
-                "best_accuracy",
-                None
+            round(
+                best_accuracy,
+                4
             ),
 
         "Final Loss":
-            summary.get(
-                "final_loss",
-                None
+            round(
+                final_loss,
+                4
             ),
 
         "Best Loss":
-            summary.get(
-                "best_loss",
-                None
+            round(
+                best_loss,
+                4
             )
     })
 
 
-df = pd.DataFrame(rows)
+# =====================================================
+# CREATE DATAFRAME
+# =====================================================
+benchmark_df = pd.DataFrame(rows)
 
+benchmark_df = benchmark_df.sort_values(
+    by="Method"
+)
+
+
+# =====================================================
+# PRINT
+# =====================================================
 print("\nBenchmark Table:\n")
 
-print(df)
+print(benchmark_df)
 
-df.to_csv(
 
-    "results/benchmark_table.csv",
+# =====================================================
+# SAVE CSV
+# =====================================================
+output_path = os.path.join(
+
+    "results",
+
+    "benchmark_table.csv"
+)
+
+benchmark_df.to_csv(
+
+    output_path,
+
     index=False
 )
 
 print(
-    "\nSaved benchmark table.\n"
+    f"\nSaved benchmark table to:\n"
+    f"{output_path}\n"
 )
