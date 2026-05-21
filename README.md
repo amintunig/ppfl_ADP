@@ -234,6 +234,14 @@ uv pip install -r requirements.txt
 
 #### Logging: Comprehensive tracking of metrics and privacy budget consumption.
 
+#### To see all results tables and plots, run the following command:
+    python experiments/generate_benchmark_table.py
+    python experiments/plot_results.py
+    cat results/benchmark_results.csv
+    python experiments/train_dp_fedavg.py --config configs/dp_fedavg_iid.yaml
+    python experiments/train_dp_fedavg.py --config configs/dp_fedavg_noniid.yaml    
+    
+
 
 
 ## 🤝 Contributing
